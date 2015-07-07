@@ -1,0 +1,26 @@
+package com.peoplenet.kinesis.adapter.services
+
+import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessor
+import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessorFactory
+import com.squareup.okhttp.OkHttpClient
+
+import groovy.transform.CompileStatic
+
+import com.peoplenet.kinesis.adapter.domain.EndpointConfiguration
+
+@CompileStatic
+class KinesisProcessorFactory implements IRecordProcessorFactory {
+
+    protected final EndpointConfiguration endpointConfig
+    protected final OkHttpClient client = new OkHttpClient()
+
+    KinesisProcessorFactory(EndpointConfiguration endpointConfig) {
+        this.endpointConfig = endpointConfig
+    }
+
+    @Override
+    IRecordProcessor createProcessor() {
+        return new KinesisDataProcessor(endpointConfig, client)
+    }
+}
+
