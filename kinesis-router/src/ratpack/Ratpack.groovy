@@ -1,7 +1,7 @@
-import org.zirbes.kinesis.router.handlers.KinesisErrorHandler
-import org.zirbes.kinesis.router.modules.FilterModule
-import org.zirbes.kinesis.router.modules.KinesisModule
-import org.zirbes.kinesis.router.KinesisActionChain
+import com.peoplenet.kinesis.router.handlers.KinesisErrorHandler
+import com.peoplenet.kinesis.router.modules.FilterModule
+import com.peoplenet.kinesis.router.modules.KinesisModule
+import com.peoplenet.kinesis.router.KinesisActionChain
 
 import ratpack.config.ConfigData
 import ratpack.error.ServerErrorHandler
