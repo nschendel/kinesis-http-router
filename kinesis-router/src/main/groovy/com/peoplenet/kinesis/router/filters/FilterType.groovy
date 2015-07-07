@@ -6,7 +6,8 @@ enum FilterType {
     DATETIME,
     OPEN,
     OR,
-    RATE
+    RATE,
+    MIDPACKET
 
     DataFilter filter(String param) {
         switch (this) {
@@ -20,6 +21,8 @@ enum FilterType {
                 return new OrFilterChain()
             case RATE:
                 return new RateFilter(param as Double)
+            case MIDPACKET:
+                return new MidPacketFilter(param)
             default:
                 return new OpenFilter()
         }

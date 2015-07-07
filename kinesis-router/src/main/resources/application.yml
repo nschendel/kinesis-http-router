@@ -2,8 +2,4 @@ kinesis:
   stream: default
   region: us-east-1
 filter:
-  open:
-#  and:
-#    open:
-#    rate: 0.25
-#    datetime: '8:00:00,12h'
+  midpacket: mid=227,blocks=-65 # VIN_DISCOVERY
