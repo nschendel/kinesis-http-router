@@ -1,0 +1,61 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven {
+            name 'PeopleNet Cloud'
+            url 'http://artifactory.dev-tools.connectedfleet.io:8081/artifactory/repo'
+        }
+    }
+    dependencies {
+        classpath "com.peoplenet:gradle-plugins:${peoplenetGradlePluginVersion}"
+        classpath "io.ratpack:ratpack-gradle:${ratpackVersion}"
+        classpath "com.github.jengelman.gradle.plugins:shadow:1.2.1"
+    }
+}
+
+apply plugin: 'com.peoplenet.base'
+
+subprojects {
+
+    apply plugin: "io.ratpack.ratpack-groovy"
+    apply plugin: "com.github.johnrengelman.shadow"
+    apply plugin: 'com.peoplenet.groovy'
+
+    test {
+        jvmArgs '-Duser.timezone=UTC'
+    }
+
+    dependencies {
+        compile ratpack.dependency('groovy')
+        compile ratpack.dependency('jackson')
+        compile 'joda-time:joda-time:2.4'
+
+        springloaded "org.springframework:springloaded:1.2.3.RELEASE"
+
+        runtime 'org.slf4j:slf4j-simple:1.7.12'
+
+        testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+    }
+
+    build.doFirst {
+        new File('build').mkdir()
+        file('build/version').text = version.toString()
+        file('build/packer.properties').text = "images=security-gateway-rp-${version.toString()}"
+    }
+
+    assemble.dependsOn shadowJar
+
+
+    tasks.withType(Test) {
+        maxParallelForks = Runtime.runtime.availableProcessors()
+    }
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
+

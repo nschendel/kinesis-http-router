@@ -1,0 +1,5 @@
+dependencies {
+    compile ratpack.dependency('rx')
+    compile "com.squareup.okhttp:okhttp:${okHttpVersion}"
+    compile 'com.amazonaws:amazon-kinesis-client:1.4.0'
+}
